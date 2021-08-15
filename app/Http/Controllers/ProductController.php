@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+
 class ProductController extends Controller
 {
     /**
@@ -16,6 +17,9 @@ class ProductController extends Controller
     {
         // Read all product
         return Product::all(); // อ่านทั้งหมด
+
+        //ทดสอบ role ด้วย ability
+
     }
 
     /**
@@ -24,15 +28,31 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //ทดสอบ role ด้วย ability = 1 เช็คสิทธิ์ก่อน
     public function store(Request $request)
     {
-        //ตรวจสอบว่ามีข้อมูลมาหรือไม่ https://laravel.com/docs/8.x/validation#introduction
-        $request->validate([
-            'name'=>'required|min:5',
-            'slug'=>'required',
-            'price'=>'required'
-        ]);
-        return Product::create($request->all());
+        // เช็คสิทธิ์ (Role) ว่าเป็น admin(1)
+        $user = auth()->user();
+
+        if ($user->tokenCan("1"))
+        {
+            //ตรวจสอบว่ามีข้อมูลมาหรือไม่ https://laravel.com/docs/8.x/validation#introduction
+            $request->validate([
+                'name'  => 'required|min:5',
+                'slug'  => 'required',
+                'price' => 'required',
+            ]);
+
+            return Product::create($request->all());
+        }
+        else
+        {
+            return [
+                'status' => 'Permission denied to create',
+            ];
+        }
+
     }
 
     /**
@@ -55,9 +75,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product= Product::find($id);
-        $product->update($request->all());
-        return $product;
+        // เช็คสิทธิ์ (Role) ว่าเป็น admin(1)
+        $user = auth()->user();
+
+        if ($user->tokenCan("1"))
+        {
+            $product = Product::find($id);
+            $product->update($request->all());
+
+            return $product;
+        }
+        else
+        {
+            return [
+                'status' => 'Permission denied to create',
+            ];
+        }
+
     }
 
     /**
@@ -68,7 +102,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        // return "detroy";
-        return Product::destroy($id);
+        
+        // เช็คสิทธิ์ (role) ว่าเป็น admin (1) 
+        $user = auth()->user();
+
+        if($user->tokenCan("1")){
+            return Product::destroy($id);
+        }else{
+            return [
+                'status' => 'Permission denied to create'
+            ];
+        }
+
     }
 }
