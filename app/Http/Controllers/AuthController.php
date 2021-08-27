@@ -56,12 +56,12 @@ class AuthController extends Controller
         $user = User::where('email', $fields['email'])->first();
 
         // Check password ref: https://youtu.be/2zrsP2HRFoM?t=6308
-        // if ความหมาย ถ้าไม่พบอีเมล์ ไม่เจอ passowrd 
+        // if ความหมาย ถ้าไม่พบอีเมล์ ไม่เจอ password
         // Hash คือ ที่มีการเข้ารหัส sha มาตรวจสอบ ต้องใส่ข้อมูล 2 อย่าง ข้อมูลอะไร เช็คกับอะไร 
         if(!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'Invalid login'
-            ]);
+            ],401);
         }else{
             
             // ลบ token เก่าออกแล้วต่อยสร้างใหม่
@@ -81,6 +81,7 @@ class AuthController extends Controller
     }
 
     // Logout
+
     public function logout(Request $request) {
         auth()->user()->tokens()->delete(); // ทำการลบ tokens ใน table user 
         return [

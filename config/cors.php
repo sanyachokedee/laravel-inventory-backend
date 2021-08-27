@@ -29,6 +29,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    // ให้ลองรับจาก domain อื่น
+    'supports_credentials' => true,
 
 ];
