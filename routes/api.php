@@ -24,6 +24,7 @@ Route::post('login',[AuthController::class, 'login']);
 //Protected routes
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('products', ProductController::class);  //แสดงข้อมูล table:products
+    Route::get('products/search/{keyword}', [ProductController::class, 'search']);
     Route::post('logout',[AuthController::class, 'logout']);
 });
 

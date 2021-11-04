@@ -20,6 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    // alert()->success('It worked!', 'The form was submitted');
+
+    return view('test');
+});
+
 Route::get('menu_head', function () {
     // return "menu_head";
     // return view('menu_head',['name' => 'James']);  // view show james passed

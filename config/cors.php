@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    // 'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
@@ -29,7 +30,7 @@ return [
 
     'max_age' => 0,
 
-    // ให้ลองรับจาก domain อื่น
+    // ให้รองรับจาก domain อื่น
     'supports_credentials' => true,
 
 ];
