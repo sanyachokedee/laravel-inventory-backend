@@ -39,7 +39,8 @@ class ProductSeeder extends Seeder
         Product::insert($data);
 
         // ทำการเรียกตัว ProductFactory ที่จะทำการ Faker ข้อมูลให้
-        Product::factory(4999)->create();
+        // Product::factory(4999)->create(); // Local สร้าง 4999 ข้อมูล
+        Product::factory(999)->create(); // Heroku สร้าง 999 ข้อมูล
 
     }
 }

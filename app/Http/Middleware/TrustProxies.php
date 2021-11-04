@@ -12,7 +12,8 @@ class TrustProxies extends Middleware
      *
      * @var array|string|null
      */
-    protected $proxies;
+    // protected $proxies; // Local
+    protected $proxies ="*"; // Heroku อนุญาตให้ยิงได้จากทุกที่ domain ip อะไรก็ได้
 
     /**
      * The headers that should be used to detect proxies.

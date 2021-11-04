@@ -36,7 +36,8 @@ class UserSeeder extends Seeder
         User::create($data);
 
         // ทำการเรียกตัว UserFactory ทำตัว Faker ให้เรา
-        User::factory(99)->create();  // (จำนวนที่ต้องการ 99)
+        // User::factory(99)->create();  // local (จำนวนที่ต้องการ 99)
+        User::factory(50)->create();  // ขี้น Heroku (จำนวนที่ต้องการ 50)
 
     }
 }
